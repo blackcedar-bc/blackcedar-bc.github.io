@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLACKCEDAR</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-bg: #e4e9f0;
+            --card-bg: #ffffff; 
+            --accent-color: #bac8e0; 
+            --accent-hover: #9fb0cf;
+            --text-dark: #2d3748;
+            --text-gray: #718096;
+            --status-green: #2ecc71;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 20px 40px 20px;
+            color: var(--text-dark);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            overflow-x: hidden;
+        }
+
+      
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+      
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(45, 55, 72, 0.25);
+            backdrop-filter: blur(3px);
+            z-index: -1;
+        }
+
+     
+        html[lang="fa"] body { font-family: 'Vazirmatn', sans-serif; }
+        html[lang="zh"] body { font-family: 'Microsoft YaHei', SimHei, sans-serif; }
+
+        .main-card {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 520px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+            z-index: 1;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(8px);
+            padding: 6px 12px;
+            border-radius: 30px;
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .lang-btn.active {
+            color: var(--text-dark);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .banner-section {
+            width: 100%;
+            height: 190px;
+            background-image: url('pictures/h.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .profile-section {
+            padding: 0 24px 20px 24px;
+            position: relative;
+            margin-top: -60px;
+            text-align: inherit;
+        }
+
+        html[dir="rtl"] .profile-section { text-align: right; }
+        html[dir="ltr"] .profile-section { text-align: left; }
+
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .avatar-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 6px solid var(--card-bg);
+            background-color: var(--card-bg);
+            object-fit: cover;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .status-badge {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--status-green);
+            border: 4px solid var(--card-bg);
+            border-radius: 50%;
+        }
+
+        .user-name {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .user-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #8fa0be;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .user-bio {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 14px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title i {
+            color: var(--accent-color);
+        }
+
+        .skills-wrapper {
+            margin-bottom: 24px;
+            padding: 0 24px;
+        }
+
+        .skill-bar-item {
+            margin-bottom: 12px;
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .skill-progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: #f1f5f9;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-progress-fill {
+            height: 100%;
+            background-color: var(--accent-color);
+            border-radius: 10px;
+            width: 0;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .music-player-card {
+            background-color: #f8fafc;
+            border-top: 1px solid #f1f5f9;
+            padding: 20px 24px 10px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .album-art {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background-color: var(--accent-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .album-art img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .track-details {
+            flex-grow: 1;
+        }
+
+        .track-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .track-artist {
+            font-size: 11px;
+            color: var(--text-gray);
+            margin-top: 2px;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 5px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 16px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .control-btn:hover {
+            background-color: #e2e8f0;
+            color: var(--accent-color);
+        }
+
+        .play-pause-btn {
+            background-color: var(--accent-color);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(186, 200, 224, 0.4);
+        }
+
+        .progress-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            font-size: 10px;
+            color: var(--text-gray);
+        }
+
+        .progress-bar-container {
+            flex-grow: 1;
+            height: 5px;
+            background-color: #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background-color: var(--accent-color);
+            border-radius: 10px;
+        }
+
+        .footer-socials {
+            padding: 15px 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            border-top: 1px solid #f1f5f9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .social-link-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-circle-btn {
+            width: 40px;
+            height: 40px;
+            background-color: #f1f5f9;
+            color: var(--text-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .social-circle-btn:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        .copyright-section {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-gray);
+            padding: 5px 24px 15px 24px;
+            background-color: #fff;
+            position: relative;
+            z-index: 2;
+            font-weight: 500;
+        }
+
+        .waves-container {
+            position: relative;
+            width: 100%;
+            height: 45px;
+            background-color: #ffffff;
+            overflow: hidden;
+            margin-top: -1px;
+        }
+
+        .wave-layer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background-repeat: repeat-x;
+            background-position: 0 bottom;
+        }
+
+        .wave-layer.wave1 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0 C150,90 350,10 500,70 C650,130 850,40 1000,80 C1150,120 1350,10 1500,40 L1500,120 L0,120 Z' fill='%23bac8e0' opacity='0.4'%3E%3C/path%3E%3C/svg%3E");
+            animation: move-wave 12s linear infinite;
+            z-index: 3;
+        }
+
+        .wave-layer.wave2 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,30 C150,100 350,20 500,60 C650,100 850,30 1000,50 C1150,70 1350,30 1500,60 L1500,120 L0,120 Z' fill='%239fb0cf' opacity='0.6'%3E%3C/path%3E%3C/svg%3E");
+            animation: move-wave 7s linear infinite reverse;
+            z-index: 2;
+        }
+
+        .wave-layer.wave3 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,50 C200,110 400,40 600,80 C800,120 1000,50 1200,90 L1200,120 L0,120 Z' fill='%237a8fae' opacity='0.3'%3E%3C/path%3E%3C/svg%3E");
+            animation: move-wave 18s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes move-wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+    </style>
+</head>
+<body>
+
+    <video class="video-background" autoplay loop muted playsinline>
+        <source src="pictures/dd.mp4" type="video/mp4">
+    </video>
+
+    <div class="video-overlay"></div>
+
+    <div class="main-card">
+        <div class="lang-switcher">
+            <button class="lang-btn" id="btn-fa" onclick="switchLanguage('fa', this)">FA</button>
+            <button class="lang-btn active" id="btn-en" onclick="switchLanguage('en', this)">EN</button>
+            <button class="lang-btn" id="btn-zh" onclick="switchLanguage('zh', this)">ZH</button>
+        </div>
+
+        <div class="banner-section"></div>
+
+        <div class="profile-section">
+            <div class="avatar-container">
+                <img id="avatar-img" class="avatar-img" src="" alt="Avatar">
+                <div class="status-badge"></div>
+            </div>
+
+            <h1 class="user-name" id="txt-name">Blackcedar</h1>
+            <div class="user-title">
+                <i class="fa-solid fa-microchip"></i>
+                <span id="txt-title">IoT & Embedded Systems Developer</span>
+            </div>
+            <p class="user-bio" id="txt-bio">
+                Passionate about AI, robotics, and hardware. I combine creative ideas with code and silicon to build smart, functional gadgets.
+            </p>
+        </div>
+
+        <div class="skills-wrapper">
+            <div class="prog-languages" style="margin-bottom: 24px;">
+                <h3 class="section-title">
+                    <i class="fa-solid fa-code"></i>
+                    <span id="txt-skill1">Programming Languages</span>
+                </h3>
+
+                <div class="skill-bar-item">
+                    <div class="skill-info">
+                        <span>C / C++</span>
+                        <span id="val-cpp">70%</span>
+                    </div>
+                    <div class="skill-progress-container">
+                        <div class="skill-progress-fill" id="fill-cpp" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-bar-item">
+                    <div class="skill-info">
+                        <span>Python</span>
+                        <span id="val-py">65%</span>
+                    </div>
+                    <div class="skill-progress-container">
+                        <div class="skill-progress-fill" id="fill-py" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-bar-item">
+                    <div class="skill-info">
+                        <span>MicroPython</span>
+                        <span id="val-upy">80%</span>
+                    </div>
+                    <div class="skill-progress-container">
+                        <div class="skill-progress-fill" id="fill-upy" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-bar-item">
+                    <div class="skill-info">
+                        <span>HTML & CSS</span>
+                        <span id="val-html">95%</span>
+                    </div>
+                    <div class="skill-progress-container">
+                        <div class="skill-progress-fill" id="fill-html" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="section-title">
+                    <i class="fa-solid fa-microchip"></i>
+                    <span id="txt-skill2">Hardware & Boards</span>
+                </h3>
+
+                <div class="skill-bar-item">
+                    <div class="skill-info">
+                        <span>Arduino</span>
+                        <span id="val-arduino">95%</span>
+                    </div>
+                    <div class="skill-progress-container">
+                        <div class="skill-progress-fill" id="fill-arduino" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-bar-item">
+                    <div class="skill-info">
+                        <span>ESP32 / ESP8266</span>
+                        <span id="val-esp">90%</span>
+                    </div>
+                    <div class="skill-progress-container">
+                        <div class="skill-progress-fill" id="fill-esp" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-bar-item">
+                    <div class="skill-info">
+                        <span>Raspberry Pi</span>
+                        <span id="val-raspi">60%</span>
+                    </div>
+                    <div class="skill-progress-container">
+                        <div class="skill-progress-fill" id="fill-raspi" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="music-player-card">
+            <audio id="main-audio" src="music/laputa.mp3"></audio>
+            <div class="player-info">
+                <div class="album-art">
+                    <img id="album-img" src="music/laputa.jpg" alt="Lofi cover">
+                </div>
+                <div class="track-details">
+                    <div class="track-title" id="txt-track-title">LAPUTA</div>
+                    <div class="track-artist" id="txt-track-artist">Panchiko</div>
+                </div>
+            </div>
+            <div class="progress-area">
+                <span id="current-time">0:00</span>
+                <div class="progress-bar-container" id="progress-container">
+                    <div class="progress-bar-fill" id="progress-bar"></div>
+                </div>
+                <span id="duration">0:00</span>
+            </div>
+            <div class="player-controls">
+                <button class="control-btn" id="prev-btn"><i class="fa-solid fa-backward-step"></i></button>
+                <button class="control-btn play-pause-btn" id="play-btn"><i class="fa-solid fa-play"></i></button>
+                <button class="control-btn" id="next-btn"><i class="fa-solid fa-forward-step"></i></button>
+            </div>
+        </div>
+
+        <div class="footer-socials">
+            <div class="social-link-group">
+                <a href="https://t.me/bcsleep" class="social-circle-btn" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
+                <a href="https://github.com/blackcedar-bc" class="social-circle-btn" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </div>
+
+        <div class="copyright-section" id="txt-copyright">
+            © 2026 Blackcedar. All rights reserved.
+        </div>
+
+        <div class="waves-container">
+            <div class="wave-layer wave1"></div>
+            <div class="wave-layer wave2"></div>
+            <div class="wave-layer wave3"></div>
+        </div>
+    </div>
+
+    <script>
+        const myAvatars = [
+            "pictures/k.jpg",
+            "pictures/v.jpg",
+            "pictures/f.jpg"
+        ];
+
+        const playlist = [
+            { title: "LAPUTA", artist: "Panchiko", src: "music/laputa.mp3", cover: "music/laputa.jpg" },
+            { title: "Lofi Sky", artist: "Ambient Music", src: "music/sky.mp3", cover: "music/sky.jpg" }
+        ];
+        let currentTrackIndex = 0;
+
+        const translations = {
+            fa: {
+                dir: "rtl", name: "BLACKCEDAR", title: "توسعه‌دهنده اینترنت اشیاء (IoT)",
+                bio: "من روی مرز بین سخت‌افزار و نرم‌افزار کار می‌کنم؛ جایی که ایده‌ها از یک خط کد یا یک برد کوچک، تبدیل به سیستم‌های واقعی و قابل استفاده می‌شن.<br><br>تمرکزم روی توسعه پروژه‌های اینترنت اشیا (IoT) و سیستم‌های تعبیه‌شده است؛ از میکروکنترلرهایی مثل ESP32، ESP8266 و Arduino گرفته تا بردهای قدرتمندتر مثل Raspberry Pi. تجربه ساخت وب‌سرورهای سبک، سیستم‌های متصل به شبکه و ابزارهای هوشمند رو دارم.<br><br>به جای استفاده از راه‌حل‌های آماده، ترجیحم اینه که سیستم‌ها رو از پایه درک کنم، دستکاری کنم و به نسخه بهتر و کاربردی‌تر تبدیلشون کنم.<br><br>هدفم ساخت محصولاتی ساده، سریع و قابل توسعه است؛ چیزهایی که از یک پروژه شخصی شروع می‌شن اما می‌تونن به یک سیستم واقعی یا حتی یک محصول تبدیل بشن.",
+                skill1: "زبان‌های برنامه‌نویسی", skill2: "سخت‌افزارها و بردها",
+                cppVal: "۷۰٪", pyVal: "۶۵٪", upyVal: "۸۰٪", htmlVal: "۹۵٪", arduinoVal: "۹۵٪", espVal: "۹۰٪", raspiVal: "۶۰٪",
+                copyright: "© ۲۰۲۶ BLACKCEDAR تمامی حقوق محفوظ است.", avatarAlt: "آواتار"
+            },
+            en: {
+                dir: "ltr", name: "BLACKCEDAR", title: "IoT & Embedded Systems Developer",
+                bio: "I work at the intersection of hardware and software, where ideas evolve from a single line of code or a small board into real, functional systems.<br><br>My focus is on IoT and embedded systems development, ranging from microcontrollers like ESP32, ESP8266, and Arduino to more powerful boards such as Raspberry Pi. I have experience building lightweight web servers, network-connected systems, and smart tools.<br><br>Instead of relying on ready-made solutions, I prefer to understand systems from the ground up, modify them, and turn them into more efficient and practical versions.<br><br>My goal is to build simple, fast, and scalable products—things that start as personal projects but can grow into real systems or even full products.",
+                skill1: "Programming Languages", skill2: "Hardware & Boards",
+                cppVal: "70%", pyVal: "65%", upyVal: "80%", htmlVal: "95%", arduinoVal: "95%", espVal: "90%", raspiVal: "60%",
+                copyright: "© 2026 BLACKCEDAR All rights reserved.", avatarAlt: "Avatar"
+            },
+            zh: {
+                dir: "ltr", name: "BLACKCEDAR", title: "物联网 (IoT) 与嵌入式系统开发人员",
+                bio: "我专注于软硬件的交叉领域，在这里，一个想法可以从一行代码或一块小型开发板，发展成真正可运行的系统。<br><br>我的重点是物联网（IoT）和嵌入式系统开发，使用 ESP32、ESP8266 和 Arduino 等微控制器，以及更强大的 Raspberry Pi。我有开发轻量级 Web 服务器、网络连接系统和智能工具的经验。<br><br>我不依赖现成的解决方案，更喜欢从底层理解系统，进行修改，并将其优化成更高效、更实用的版本。<br><br>我的目标是打造简单、快速、可扩展的产品——从个人项目开始，最终成长为真正的系统甚至产品。",
+                skill1: "编程语言", skill2: "硬件开发板",
+                cppVal: "70%", pyVal: "65%", upyVal: "80%", htmlVal: "95%", arduinoVal: "95%", espVal: "90%", raspiVal: "60%",
+                copyright: "© 2026 BLACKCEDAR 版权所有。", avatarAlt: "头像"
+            }
+        };
+
+        function switchLanguage(lang, btnElement) {
+            const root = document.getElementById('html-root');
+            root.setAttribute('lang', lang);
+            root.setAttribute('dir', translations[lang].dir);
+
+            document.getElementById('txt-name').innerText = translations[lang].name;
+            document.getElementById('txt-title').innerText = translations[lang].title;
+            
+            document.getElementById('txt-bio').innerHTML = translations[lang].bio;
+            
+            document.getElementById('txt-skill1').innerText = translations[lang].skill1;
+            document.getElementById('txt-skill2').innerText = translations[lang].skill2;
+            
+            document.getElementById('val-cpp').innerText = translations[lang].cppVal;
+            document.getElementById('val-py').innerText = translations[lang].pyVal;
+            document.getElementById('val-upy').innerText = translations[lang].upyVal;
+            document.getElementById('val-html').innerText = translations[lang].htmlVal;
+            document.getElementById('val-arduino').innerText = translations[lang].arduinoVal;
+            document.getElementById('val-esp').innerText = translations[lang].espVal;
+            document.getElementById('val-raspi').innerText = translations[lang].raspiVal;
+            
+            document.getElementById('txt-copyright').innerText = translations[lang].copyright;
+            document.getElementById('avatar-img').setAttribute('alt', translations[lang].avatarAlt);
+
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            if (btnElement) {
+                btnElement.classList.add('active');
+            } else {
+                document.getElementById(`btn-${lang}`).classList.add('active');
+            }
+            
+            updatePlayerUI();
+        }
+
+        function updatePlayerUI() {
+            const track = playlist[currentTrackIndex];
+            document.getElementById('txt-track-title').innerText = track.title;
+            document.getElementById('txt-track-artist').innerText = track.artist;
+            document.getElementById('album-img').src = track.cover;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const randomIndex = Math.floor(Math.random() * myAvatars.length);
+            document.getElementById('avatar-img').src = myAvatars[randomIndex];
+
+            switchLanguage('en', null);
+
+            setTimeout(() => {
+                document.getElementById('fill-cpp').style.width = '70%';
+                document.getElementById('fill-py').style.width = '65%';
+                document.getElementById('fill-upy').style.width = '80%';
+                document.getElementById('fill-html').style.width = '95%';
+                document.getElementById('fill-arduino').style.width = '95%';
+                document.getElementById('fill-esp').style.width = '90%';
+                document.getElementById('fill-raspi').style.width = '60%';
+            }, 300);
+        });
+
+        const audio = document.getElementById('main-audio');
+        const playBtn = document.getElementById('play-btn');
+        const playIcon = playBtn.querySelector('i');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
+        const currentTimeEl = document.getElementById('current-time');
+        const durationEl = document.getElementById('duration');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        let isPlaying = false;
+
+        function loadTrack(index) {
+            currentTrackIndex = index;
+            audio.src = playlist[currentTrackIndex].src;
+            updatePlayerUI();
+            if (isPlaying) {
+                audio.play().catch(err => console.log("Audio play interrupted"));
+            }
+        }
+
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                isPlaying = false;
+                audio.pause();
+                playIcon.classList.replace('fa-pause', 'fa-play');
+            } else {
+                isPlaying = true;
+                audio.play().catch(err => console.log("Audio play interrupted"));
+                playIcon.classList.replace('fa-play', 'fa-pause');
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            let nextIndex = currentTrackIndex + 1;
+            if (nextIndex >= playlist.length) nextIndex = 0;
+            loadTrack(nextIndex);
+        });
+
+        prevBtn.addEventListener('click', () => {
+            let prevIndex = currentTrackIndex - 1;
+            if (prevIndex < 0) prevIndex = playlist.length - 1;
+            loadTrack(prevIndex);
+        });
+
+        audio.addEventListener('timeupdate', (e) => {
+            const { duration, currentTime } = e.srcElement;
+            if (!duration) return;
+            const progressPercent = (currentTime / duration) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+
+            const currentMin = Math.floor(currentTime / 60);
+            let currentSec = Math.floor(currentTime % 60);
+            if (currentSec < 10) currentSec = `0${currentSec}`;
+            currentTimeEl.innerText = `${currentMin}:${currentSec}`;
+        });
+
+        function updateDurationDisplay() {
+            const duration = audio.duration;
+            if (!duration) return;
+            const durationMin = Math.floor(duration / 60);
+            let durationSec = Math.floor(duration % 60);
+            if (durationSec < 10) durationSec = `0${durationSec}`;
+            durationEl.innerText = `${durationMin}:${durationSec}`;
+        }
+
+        audio.addEventListener('loadedmetadata', updateDurationDisplay);
+        audio.addEventListener('durationchange', updateDurationDisplay);
+
+        progressContainer.addEventListener('click', (e) => {
+            const width = progressContainer.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audio.duration;
+            if (duration) audio.currentTime = (clickX / width) * duration;
+        });
+
+        audio.addEventListener('ended', () => {
+            nextBtn.click();
+        });
+    </script>
+</body>
+</html>
